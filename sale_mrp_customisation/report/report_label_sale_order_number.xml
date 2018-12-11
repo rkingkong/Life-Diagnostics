@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <template id="report_sale_order_number_label">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <t t-foreach="docs" t-as="o">
+                    <table style="table-layout: fixed">
+                        <table style="table-layout: fixed; border: 2px solid black;text-align: center; vertical-align: middle; height: .59in; width: 1.732in" align="center">
+                            <tr>
+                                <td><strong>Sale Order Number:</strong><t t-esc="o.origin"/></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expiration Date:</strong>
+                                <t t-foreach="o.move_line_ids" t-as="move_line">
+                                    <t t-esc="move_line.lot_id.expiration_date"/>
+                                </t></td>
+                            </tr>
+                        </table>
+                        <br/>
+                    </table>
+                    <p style="page-break-before:always;"> </p>
+                </t>
+            </div>
+        </t>
+    </template>
+    <template id="report_label_sale_order_number">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="sale_mrp_customisation.report_sale_order_number_label" t-lang="o.partner_id.lang"/>
+        </t>
+    </template>
+
+</odoo>
