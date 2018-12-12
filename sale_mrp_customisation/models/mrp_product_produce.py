@@ -12,7 +12,7 @@ class MrpProductProduce(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        """ Compute default lot id which will be the
+        """Compute default lot id which will be the
             concatenate lot id of the bom materials.
         """
         final_lots = []

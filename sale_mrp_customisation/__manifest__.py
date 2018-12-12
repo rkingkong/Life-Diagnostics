@@ -5,7 +5,9 @@
     'version': '11.0.1.0.0',
     'summary': 'Customisation in SALE-MRP',
     'sequence': 30,
-    'description': """Customisation in SALE-MRP""",
+    'description': """
+Customisation in SALE-MRP
+    """,
     'category': 'Sales',
     'website': '',
     'images': [],

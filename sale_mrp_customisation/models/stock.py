@@ -38,7 +38,6 @@ class StockMoveLine(models.Model):
         return res
 
     @api.onchange('lot_id')
-    @api.depends('lot_id')
     def onchange_lot_id(self):
         """Inherit this method to include expiration date if alredy present in lot_id."""
         self.expiration_date = False
