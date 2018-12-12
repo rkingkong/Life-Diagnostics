@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# -*- coding: utf-8 -*-
 
 {
     'name': 'SALE-MRP Customisation',
@@ -29,4 +29,3 @@
     'application': False,
     'auto_install': False,
 }
-# Part of Odoo. See LICENSE file for full copyright and licensing details.

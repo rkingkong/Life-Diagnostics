@@ -1,4 +1,4 @@
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
+# -*- coding: utf-8 -*-
 
 from odoo import api, fields, models
 
@@ -31,10 +31,11 @@ class StockMoveLine(models.Model):
 
     def _action_done(self):
         """Inherit this method to include Expiration date in lot id generated."""
-        super(StockMoveLine, self)._action_done()
+        res = super(StockMoveLine, self)._action_done()
         for stock in self:
             if stock.lot_id and stock.expiration_date:
                 stock.lot_id.expiration_date = stock.expiration_date
+        return res
 
     @api.onchange('lot_id')
     @api.depends('lot_id')
