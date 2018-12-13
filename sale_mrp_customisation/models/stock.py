@@ -29,17 +29,11 @@ class StockMoveLine(models.Model):
     expiration_date = fields.Date(help="Helps to know the expiration\
         Date of product.")
 
-    def _action_done(self):
-        """Inherit this method to include Expiration date in lot id generated."""
-        res = super(StockMoveLine, self)._action_done()
-        for stock in self:
-            if stock.lot_id and stock.expiration_date:
-                stock.lot_id.expiration_date = stock.expiration_date
-        return res
-
-    @api.onchange('lot_id')
+    @api.onchange('lot_id', 'expiration_date')
     def onchange_lot_id(self):
         """Inherit this method to include expiration date if alredy present in lot_id."""
         self.expiration_date = False
         if self.lot_id and self.lot_id.expiration_date:
             self.expiration_date = self.lot_id.expiration_date
+        if self.lot_id and not self.lot_id.expiration_date:
+            self.lot_id.expiration_date = self.expiration_date
