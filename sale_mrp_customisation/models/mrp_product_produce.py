@@ -7,7 +7,7 @@ class MrpProductProduce(models.TransientModel):
     _inherit = "mrp.product.produce"
     _description = "Record Production"
 
-    expiration_date = fields.Date(help="Helps to know the expiration\
+    expiration_date = fields.Datetime(help="Helps to know the expiration\
         Date of product.")
 
     @api.model
@@ -34,6 +34,7 @@ class MrpProductProduce(models.TransientModel):
                         {'name': " / ".join(final_lots),
                          'product_id': production.product_id.id,
                          'product_uom_id': production.product_uom_id.id,
+                         'removal_date': production.expiration_date,
                          })
                 if 'lot_id' in fields:
                     res['lot_id'] = final_lot_id.id
@@ -45,5 +46,5 @@ class MrpProductProduce(models.TransientModel):
         by default get."""
         res = super(MrpProductProduce, self).do_produce()
         if self.expiration_date and self.lot_id:
-            self.lot_id.expiration_date = self.expiration_date
+            self.lot_id.removal_date = self.expiration_date
         return res

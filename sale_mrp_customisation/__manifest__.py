@@ -2,7 +2,7 @@
 
 {
     'name': 'SALE-MRP Customisation',
-    'version': '11.0.1.0.0',
+    'version': '11.0.1.0.2',
     'summary': 'Customisation in SALE-MRP',
     'sequence': 30,
     'description': """
@@ -11,7 +11,7 @@ Customisation in SALE-MRP
     'category': 'Sales',
     'website': '',
     'images': [],
-    'depends': ['mrp', 'sale_stock', 'purchase'],
+    'depends': ['mrp', 'sale_stock', 'purchase', 'product_expiry'],
     'data': [
         'views/product_views.xml',
         'views/stock_quant_views.xml',

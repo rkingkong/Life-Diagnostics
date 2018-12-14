@@ -6,15 +6,16 @@
             <div class="page">
                 <t t-foreach="docs" t-as="o">
                     <table style="table-layout: fixed">
-                        <table style="table-layout: fixed; border: 2px solid black;text-align: center; vertical-align: middle; height: .59in; width: 1.732in" align="center">
+                        <table style="table-layout: fixed; border: 1px solid black;text-align: center; vertical-align: middle; height: .59in; width: 1.732in" align="center">
                             <tr>
-                                <td><strong>Sale Order Number:</strong><t t-esc="o.origin"/></td>
+                                <td><strong>S.O Number:</strong>
+                                    <t t-esc="o.origin"/>
+                                </td>
                             </tr>
                             <tr>
-                                <td><strong>Expiration Date:</strong>
-                                <t t-foreach="o.move_line_ids" t-as="move_line">
-                                    <t t-esc="move_line.lot_id.expiration_date"/>
-                                </t></td>
+                                <td><strong>Expiration Date:</strong><br/>
+                                    <t t-esc="o.picking_expiration_date"/>
+                                </td>
                             </tr>
                         </table>
                         <br/>

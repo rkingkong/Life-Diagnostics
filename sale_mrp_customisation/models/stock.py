@@ -26,14 +26,20 @@ class StockMove(models.Model):
 class StockMoveLine(models.Model):
     _inherit = 'stock.move.line'
 
-    expiration_date = fields.Date(help="Helps to know the expiration\
+    expiration_date = fields.Datetime(help="Helps to know the expiration\
         Date of product.")
 
-    @api.onchange('lot_id', 'expiration_date')
-    def onchange_lot_id(self):
+class StockPicking(models.Model):
+    _inherit = 'stock.picking'
+
+    picking_expiration_date = fields.Date(help="Helps to know the expiration\
+        Date of product.", string="Expiration Date")
+
+    @api.multi
+    def button_validate(self):
         """Inherit this method to include expiration date if alredy present in lot_id."""
-        self.expiration_date = False
-        if self.lot_id and self.lot_id.expiration_date:
-            self.expiration_date = self.lot_id.expiration_date
-        if self.lot_id and not self.lot_id.expiration_date:
-            self.lot_id.expiration_date = self.expiration_date
+        res = super(StockPicking, self).button_validate()
+        for move in self.move_line_ids:
+            if move.lot_id and move.expiration_date:
+                move.lot_id.removal_date = move.expiration_date
+        return res

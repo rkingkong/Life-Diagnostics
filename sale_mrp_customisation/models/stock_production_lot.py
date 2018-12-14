@@ -6,5 +6,7 @@ from odoo import fields, models
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
 
-    expiration_date = fields.Date(help="Helps to know the expiration\
-        Date of product.")
+    removal_date = fields.Datetime(string='Expiration Date',
+                                   help='This is the date on which the goods \
+                                   with this Serial Number should be removed \
+                                   from the stock.')
