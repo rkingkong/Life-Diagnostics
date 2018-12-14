@@ -34,7 +34,6 @@ class MrpProductProduce(models.TransientModel):
                         {'name': " / ".join(final_lots),
                          'product_id': production.product_id.id,
                          'product_uom_id': production.product_uom_id.id,
-                         'removal_date': production.expiration_date,
                          })
                 if 'lot_id' in fields:
                     res['lot_id'] = final_lot_id.id
