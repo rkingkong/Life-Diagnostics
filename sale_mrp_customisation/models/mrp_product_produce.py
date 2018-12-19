@@ -28,7 +28,7 @@ class MrpProductProduce(models.TransientModel):
                      'product_id': self.product_id.id,
                      'product_uom_id': self.product_uom_id.id,
                      })
-        self.lot_id = final_lot_id.id
+            self.lot_id = final_lot_id.id
 
     @api.multi
     def do_produce(self):
