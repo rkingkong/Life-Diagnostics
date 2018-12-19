@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <report
+        string="Sale Order Number Label"
+        id="action_report_delivery"
+        model="stock.picking"
+        report_type="qweb-pdf"
+        name="sale_mrp_customisation.report_label_sale_order_number"
+        file="sale_mrp_customisation.report_label_sale_order_number"
+        print_report_name="'Sale Order Number Label - %s - %s' % (object.partner_id.name or '', object.name)"
+    />
+</odoo>

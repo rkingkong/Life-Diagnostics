@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_quant_tree_expiration_date" model="ir.ui.view">
+        <field name="name">stock.quant.tree.inherit</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="stock.view_stock_quant_tree"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="lot_id" position="after">
+                    <field name="removal_date"/>
+                </field>
+                 <field name="quantity" position="after">
+                    <field name="note"/>
+                </field>
+            </data>
+        </field>
+    </record>
+
+    <record id="view_stock_quant_form_expiration_date" model="ir.ui.view">
+        <field name="name">stock.quant.form.inherit</field>
+        <field name="model">stock.quant</field>
+        <field name="inherit_id" ref="product_expiry.view_quant_form_expiry"/>
+        <field name="arch" type="xml">
+            <data>
+                <field name="removal_date" position="after">
+                    <field name="note"/>
+                </field>
+            </data>
+        </field>
+    </record>
+</odoo>
+
