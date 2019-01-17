@@ -9,35 +9,26 @@ class MrpProductProduce(models.TransientModel):
 
     expiration_date = fields.Datetime(help="Helps to know the expiration\
         Date of product.")
+    lot_id = fields.Many2one('stock.production.lot', string='Lot',
+                             compute='calculate_lot',
+                             readonly=False, store=True)
 
-    @api.model
-    def default_get(self, fields):
-        """Compute default lot id which will be the
-            concatenate lot id of the bom materials.
-        """
+    @api.depends('produce_line_ids.lot_id')
+    def calculate_lot(self):
         final_lots = []
-        res = super(MrpProductProduce, self).default_get(fields)
-        production = self.env['mrp.production'].browse(
-            self._context['active_id'])
-        if 'produce_line_ids' in fields:
-            if production.product_id.is_married_pair and\
-                    production.product_id.tracking == 'lot':
-                for lines in res['produce_line_ids']:
-                    if lines[2]['lot_id']:
-                        lot_id = self.env['stock.production.lot'].browse(
-                            lines[2]['lot_id'])
-                        final_lots.append(lot_id.name)
-                final_lot_id = self.env['stock.production.lot'].search(
-                    [('name', '=', " / ".join(final_lots))])
-                if not final_lot_id:
-                    final_lot_id = self.env['stock.production.lot'].create(
-                        {'name': " / ".join(final_lots),
-                         'product_id': production.product_id.id,
-                         'product_uom_id': production.product_uom_id.id,
-                         })
-                if 'lot_id' in fields:
-                    res['lot_id'] = final_lot_id.id
-        return res
+        for line in self.produce_line_ids:
+            if line.lot_id:
+                final_lots.append(line.lot_id.name)
+        if final_lots:
+            final_lot_id = self.env['stock.production.lot'].search(
+                [('name', '=', " / ".join(final_lots))])
+            if not final_lot_id:
+                final_lot_id = self.env['stock.production.lot'].create(
+                    {'name': " / ".join(final_lots),
+                     'product_id': self.product_id.id,
+                     'product_uom_id': self.product_uom_id.id,
+                     })
+            self.lot_id = final_lot_id.id
 
     @api.multi
     def do_produce(self):
